@@ -16,9 +16,9 @@ function WelcomeScreen() {
           New Game
         </ButtonLink>
 
-        <ButtonLink to="/game">
+        {/* <ButtonLink to="/game">
           Load Game
-        </ButtonLink>
+        </ButtonLink> */}
       </div>
     </div >
   );

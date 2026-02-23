@@ -4,27 +4,56 @@
     "name": "Control Blue White",
     "actions": [
       {
-        "name": "Assemble Combo",
-        "type": "wincon",
-        "timing": "own_turn",
-        "base_weight": 20,
-        "mod_late_game": 40,
-        "min_round": 6
-      },
-      {
         "name": "Counterspell",
         "type": "interaction",
         "timing": "any_turn",
-        "base_weight": 50,
-        "mod_low_health": 20,
+        "base_weight": 30,
         "min_round": 1
       },
       {
-        "name": "Supreme Verdict",
+        "name": "Exile Permanent (Enchantment)",
+        "type": "interaction",
+        "timing": "any_turn",
+        "base_weight": 30,
+        "min_round": 1
+      },
+      {
+        "name": "Return to Hand",
+        "type": "interaction",
+        "timing": "any_turn",
+        "base_weight": 30,
+        "min_round": 1
+      },
+      {
+        "name": "Board Wipe",
         "type": "interaction",
         "timing": "own_turn",
-        "base_weight": 30,
-        "mod_low_health": 40,
+        "base_weight": 20,
+        "min_round": 4
+      },
+      {
+        "name": "Attack (Flying)",
+        "type": "wincon",
+        "timing": "own_turn",
+        "base_weight": 50,
+        "impact": {
+          "target": "user",
+          "value": -5
+        },
+        "min_round": 2
+      },
+      {
+        "name": "Assemble Wincon Piece",
+        "type": "wincon",
+        "timing": "own_turn",
+        "base_weight": 20,
+        "min_round": 3
+      },
+      {
+        "name": "Go Infinite",
+        "type": "wincon",
+        "timing": "own_turn",
+        "base_weight": 10,
         "min_round": 4
       }
     ]
@@ -34,77 +63,228 @@
     "name": "Burn Red Black",
     "actions": [
       {
-        "name": "Fireball",
+        "name": "Direct Damage",
         "type": "wincon",
         "timing": "own_turn",
         "base_weight": 40,
         "impact": {
           "target": "user",
-          "value": -10
+          "value": -5
         },
-        "min_round": 5
+        "min_round": 1
       },
       {
-        "name": "Earthquake",
-        "type": "interaction",
+        "name": "Flame Sweep",
+        "type": "wincon",
         "timing": "own_turn",
         "base_weight": 30,
         "impact": {
           "target": "all",
           "value": -5
         },
-        "min_round": 3
+        "min_round": 1
       },
       {
-        "name": "Lightning Bolt",
+        "name": "Destroy Permanent",
         "type": "interaction",
         "timing": "any_turn",
-        "base_weight": 40,
+        "base_weight": 30,
+        "min_round": 1
+      },
+      {
+        "name": "Board Wipe",
+        "type": "interaction",
+        "timing": "own_turn",
+        "base_weight": 30,
+        "min_round": 4
+      },
+      {
+        "name": "Attack",
+        "type": "wincon",
+        "timing": "own_turn",
+        "base_weight": 50,
+        "impact": {
+          "target": "user",
+          "value": -5
+        },
+        "min_round": 1
+      },
+      {
+        "name": "Go Infinite",
+        "type": "wincon",
+        "timing": "own_turn",
+        "base_weight": 10,
+        "min_round": 5
+      }
+    ]
+  },
+  {
+    "id": "gowide_green_white",
+    "name": "Go Wide Green White",
+    "actions": [
+      {
+        "name": "Exile Permanent (Enchantment)",
+        "type": "interaction",
+        "timing": "any_turn",
+        "base_weight": 30,
+        "min_round": 1
+      },
+      {
+        "name": "Board Wipe",
+        "type": "interaction",
+        "timing": "own_turn",
+        "base_weight": 30,
+        "min_round": 4
+      },
+      {
+        "name": "Creature Attack",
+        "type": "wincon",
+        "timing": "own_turn",
+        "base_weight": 50,
         "impact": {
           "target": "user",
           "value": -3
         },
         "min_round": 1
+      },
+      {
+        "name": "Wide Board Swing",
+        "type": "wincon",
+        "timing": "own_turn",
+        "base_weight": 30,
+        "impact": {
+          "target": "user",
+          "value": -20
+        },
+        "min_round": 4
+      },
+      {
+        "name": "Destroy Creature",
+        "type": "interaction",
+        "timing": "any_turn",
+        "base_weight": 30,
+        "min_round": 1
+      },
+      {
+        "name": "Go Infinite",
+        "type": "wincon",
+        "timing": "own_turn",
+        "base_weight": 10,
+        "min_round": 5
+      }
+    ]
+  },
+  {
+    "id": "reanimator_sultai",
+    "name": "Sultai Reanimator",
+    "actions": [
+      {
+        "name": "Entomb / Mill",
+        "type": "wincon",
+        "timing": "own_turn",
+        "base_weight": 40,
+        "min_round": 1
+      },
+      {
+        "name": "Reanimate Threat",
+        "type": "wincon",
+        "timing": "own_turn",
+        "base_weight": 30,
+        "impact": {
+          "target": "user",
+          "value": -7
+        },
+        "min_round": 3
+      },
+      {
+        "name": "Assassin's Trophy",
+        "type": "interaction",
+        "timing": "any_turn",
+        "base_weight": 35,
+        "min_round": 2
+      },
+      {
+        "name": "Toxic Deluge",
+        "type": "interaction",
+        "timing": "own_turn",
+        "base_weight": 25,
+        "impact": {
+          "target": "all",
+          "value": -4
+        },
+        "min_round": 3
       }
     ]
   },
   {
     "id": "stax_mono_white",
-    "name": "Stax Mono White",
+    "name": "Mono White Stax",
     "actions": [
       {
-        "name": "Smothering Tithe",
+        "name": "Taxing Effect",
         "type": "wincon",
         "timing": "own_turn",
-        "base_weight": 50,
-        "min_round": 3
+        "base_weight": 40,
+        "min_round": 2
       },
       {
-        "name": "Silence",
+        "name": "Silence Opponent",
         "type": "interaction",
         "timing": "any_turn",
         "base_weight": 30,
+        "min_round": 1
+      },
+      {
+        "name": "Drannith Magistrate",
+        "type": "interaction",
+        "timing": "own_turn",
+        "base_weight": 30,
         "min_round": 2
+      },
+      {
+        "name": "Armageddon",
+        "type": "wincon",
+        "timing": "own_turn",
+        "base_weight": 10,
+        "min_round": 6
       }
     ]
   },
   {
-    "id": "reanimator_black_green",
-    "name": "Reanimator BG",
+    "id": "spellslinger_izzet",
+    "name": "Izzet Spellslinger",
     "actions": [
       {
-        "name": "Reanimate Behemoth",
+        "name": "Storm Off",
+        "type": "wincon",
+        "timing": "own_turn",
+        "base_weight": 15,
+        "impact": {
+          "target": "all",
+          "value": -15
+        },
+        "min_round": 5
+      },
+      {
+        "name": "Iteration / Draw",
         "type": "wincon",
         "timing": "own_turn",
         "base_weight": 40,
-        "min_round": 4
+        "min_round": 1
       },
       {
-        "name": "Abrupt Decay",
+        "name": "Fork / Redirect",
+        "type": "interaction",
+        "timing": "any_turn",
+        "base_weight": 25,
+        "min_round": 3
+      },
+      {
+        "name": "Chaos Warp",
         "type": "interaction",
         "timing": "any_turn",
         "base_weight": 30,
-        "min_round": 2
+        "min_round": 3
       }
     ]
   }
