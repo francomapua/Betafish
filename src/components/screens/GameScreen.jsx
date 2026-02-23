@@ -53,24 +53,77 @@ function GameScreen() {
     }
   };
 
+  const resolveAction = () => {
+    if (currentAction?.impact) {
+      const { target, value } = currentAction.impact;
+
+      setPlayers(prev => prev.map(p => {
+        // Don't damage the person who cast the spell unless it's a global "all"
+        if (target === "all" && p.id !== currentPlayer.id) {
+          return { ...p, currentLife: p.currentLife + value };
+        }
+        if (target === "user" && p.type === "user") {
+          return { ...p, currentLife: p.currentLife + value };
+        }
+        return p;
+      }));
+
+      addLog(`💥 ${currentAction.name} resolved: ${target} took ${Math.abs(value)} damage.`);
+    } else {
+      addLog(`✅ ${currentAction.name} resolved.`);
+    }
+    nextTurn();
+  };
+
+  const checkForResponses = () => {
+    const opponents = players.filter(p => p.type === 'opponent');
+    let responder = null;
+    let triggeredAction = null;
+
+    // Simulate passing priority to each opponent
+    for (const opp of opponents) {
+      const profile = profilesData.find(p => p.id === opp.profileId);
+      const interactions = profile.actions.filter(a => a.timing === "any_turn");
+
+      if (interactions.length === 0) continue;
+
+      const action = interactions[Math.floor(Math.random() * interactions.length)];
+      const weight = action.base_weight + (opp.currentLife < 15 ? (action.mod_low_health || 0) : 0);
+
+      if (Math.floor(Math.random() * 100) < weight) {
+        responder = opp;
+        triggeredAction = action;
+        break;
+      }
+    }
+
+    if (triggeredAction) {
+      setCurrentAction(triggeredAction);
+      setGameState('pending-reaction');
+      addLog(`‼️ ${responder.name} responds: ${triggeredAction.name}`);
+    } else {
+      addLog("✅ No responses. Spell/Ability resolves.");
+    }
+  };
+
   useEffect(() => {
     if (currentPlayer?.type === 'opponent' && gameState === 'active') {
       const profile = profilesData.find(p => p.id === currentPlayer.profileId);
       if (!profile) return;
 
-      const action = profile.actions[Math.floor(Math.random() * profile.actions.length)];
-      const finalWeight = action.base_weight +
-        (currentPlayer.currentLife < 15 ? action.mod_low_health : 0) +
-        (round > 5 ? action.mod_late_game : 0);
+      // AI only performs "own_turn" actions (Wincons/Board Wipes)
+      const ownTurnActions = profile.actions.filter(a => a.timing === "own_turn");
+      if (ownTurnActions.length === 0) return;
 
-      const roll = Math.floor(Math.random() * 100) + 1;
+      const action = ownTurnActions[Math.floor(Math.random() * ownTurnActions.length)];
+      const weight = action.base_weight + (round > 5 ? (action.mod_late_game || 0) : 0);
 
-      if (roll <= finalWeight) {
+      if (Math.floor(Math.random() * 100) < weight) {
         setCurrentAction(action);
         setGameState('pending-reaction');
-        addLog(`⚠️ ${currentPlayer.name} attempts: ${action.name}`);
+        addLog(`⚠️ ${currentPlayer.name} plays: ${action.name}`);
       } else {
-        addLog(`💤 ${currentPlayer.name} passes turn.`);
+        addLog(`💤 ${currentPlayer.name} develops board and passes.`);
       }
     }
   }, [turnIndex, gameState, currentPlayer, round]);
@@ -98,7 +151,7 @@ function GameScreen() {
           {logs.map((l, i) => <div key={i}><span className="text-zinc-600">[{l.time}]</span> {l.text}</div>)}
         </div>
         <div className="p-4 bg-stone-950/50 border-t border-stone-800 space-y-2">
-          <button onClick={undoAction} className="w-full py-2 bg-stone-800 hover:bg-stone-700 text-zinc-300 rounded text-[10px] uppercase tracking-widest transition-colors">Undo</button>
+          {/* <button onClick={undoAction} className="w-full py-2 bg-stone-800 hover:bg-stone-700 text-zinc-300 rounded text-[10px] uppercase tracking-widest transition-colors">Undo</button> */}
           <ButtonLink to="/" className="block w-full py-2 bg-red-900/20 text-red-400 rounded text-[10px] text-center uppercase tracking-widest border border-red-900/50">Quit Match</ButtonLink>
         </div>
       </aside>
@@ -136,7 +189,16 @@ function GameScreen() {
               <button onClick={() => { addLog(`Resolved ${currentAction.name}`); nextTurn(); }} className="px-8 py-4 bg-green-900/40 border border-green-500 rounded font-bold uppercase hover:bg-green-900/60 transition-colors">Resolve</button>
             </>
           ) : (
-            <button onClick={nextTurn} className="px-12 py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-zinc-200 transition-all active:scale-95">Next Turn</button>
+            <>
+              {currentPlayer?.type === 'user' && (
+                <button onClick={checkForResponses} className="px-8 py-4 bg-blue-600/20 border border-blue-500 text-blue-400 font-bold uppercase hover:bg-blue-600/40">
+                  Check Responses
+                </button>
+              )}
+              <button onClick={nextTurn} className="px-12 py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-zinc-200">
+                Next Turn
+              </button>
+            </>
           )}
         </div>
       </footer>

@@ -2,78 +2,109 @@
   {
     "id": "control_blue_white",
     "name": "Control Blue White",
-    "pattern": "Control",
-    "desc": "Stalls the board, counters spells, and uses board wipes.",
     "actions": [
+      {
+        "name": "Assemble Combo",
+        "type": "wincon",
+        "timing": "own_turn",
+        "base_weight": 20,
+        "mod_late_game": 40,
+        "min_round": 6
+      },
       {
         "name": "Counterspell",
-        "base_weight": 40,
-        "mod_low_health": 20,
-        "mod_late_game": 10
-      },
-      {
-        "name": "Board Wipe",
-        "base_weight": 20,
-        "mod_low_health": 30,
-        "mod_late_game": 20
-      },
-      {
-        "name": "Targeted Removal",
-        "base_weight": 30,
-        "mod_low_health": 10,
-        "mod_late_game": 5
-      }
-    ]
-  },
-  {
-    "id": "gowide_green_white",
-    "name": "Go Wide Green White",
-    "pattern": "Midrange",
-    "desc": "Fills the board with small creatures and buffs them.",
-    "actions": [
-      {
-        "name": "Create Tokens",
+        "type": "interaction",
+        "timing": "any_turn",
         "base_weight": 50,
-        "mod_low_health": -10,
-        "mod_late_game": 10
+        "mod_low_health": 20,
+        "min_round": 1
       },
       {
-        "name": "Group Buff (+1/+1)",
+        "name": "Supreme Verdict",
+        "type": "interaction",
+        "timing": "own_turn",
         "base_weight": 30,
-        "mod_low_health": 0,
-        "mod_late_game": 30
-      },
-      {
-        "name": "Naturalize",
-        "base_weight": 20,
-        "mod_low_health": 5,
-        "mod_late_game": 5
+        "mod_low_health": 40,
+        "min_round": 4
       }
     ]
   },
   {
     "id": "burn_red_black",
     "name": "Burn Red Black",
-    "pattern": "Aggressive",
-    "desc": "Deals direct damage to players and punishes card draw.",
     "actions": [
       {
-        "name": "Direct Damage",
-        "base_weight": 60,
-        "mod_low_health": 20,
-        "mod_late_game": 20
+        "name": "Fireball",
+        "type": "wincon",
+        "timing": "own_turn",
+        "base_weight": 40,
+        "impact": {
+          "target": "user",
+          "value": -10
+        },
+        "min_round": 5
       },
       {
-        "name": "Discard Effect",
+        "name": "Earthquake",
+        "type": "interaction",
+        "timing": "own_turn",
         "base_weight": 30,
-        "mod_low_health": 0,
-        "mod_late_game": -10
+        "impact": {
+          "target": "all",
+          "value": -5
+        },
+        "min_round": 3
       },
       {
-        "name": "Sacrifice Creature",
-        "base_weight": 10,
-        "mod_low_health": 10,
-        "mod_late_game": 10
+        "name": "Lightning Bolt",
+        "type": "interaction",
+        "timing": "any_turn",
+        "base_weight": 40,
+        "impact": {
+          "target": "user",
+          "value": -3
+        },
+        "min_round": 1
+      }
+    ]
+  },
+  {
+    "id": "stax_mono_white",
+    "name": "Stax Mono White",
+    "actions": [
+      {
+        "name": "Smothering Tithe",
+        "type": "wincon",
+        "timing": "own_turn",
+        "base_weight": 50,
+        "min_round": 3
+      },
+      {
+        "name": "Silence",
+        "type": "interaction",
+        "timing": "any_turn",
+        "base_weight": 30,
+        "min_round": 2
+      }
+    ]
+  },
+  {
+    "id": "reanimator_black_green",
+    "name": "Reanimator BG",
+    "actions": [
+      {
+        "name": "Reanimate Behemoth",
+        "type": "wincon",
+        "timing": "own_turn",
+        "base_weight": 40,
+        "min_round": 4
+      },
+      {
+        "name": "Abrupt Decay",
+        "type": "interaction",
+        "timing": "any_turn",
+        "base_weight": 30,
+        "min_round": 2
       }
     ]
   }
