@@ -1,0 +1,80 @@
+[
+  {
+    "id": "control_blue_white",
+    "name": "Control Blue White",
+    "pattern": "Control",
+    "desc": "Stalls the board, counters spells, and uses board wipes.",
+    "actions": [
+      {
+        "name": "Counterspell",
+        "base_weight": 40,
+        "mod_low_health": 20,
+        "mod_late_game": 10
+      },
+      {
+        "name": "Board Wipe",
+        "base_weight": 20,
+        "mod_low_health": 30,
+        "mod_late_game": 20
+      },
+      {
+        "name": "Targeted Removal",
+        "base_weight": 30,
+        "mod_low_health": 10,
+        "mod_late_game": 5
+      }
+    ]
+  },
+  {
+    "id": "gowide_green_white",
+    "name": "Go Wide Green White",
+    "pattern": "Midrange",
+    "desc": "Fills the board with small creatures and buffs them.",
+    "actions": [
+      {
+        "name": "Create Tokens",
+        "base_weight": 50,
+        "mod_low_health": -10,
+        "mod_late_game": 10
+      },
+      {
+        "name": "Group Buff (+1/+1)",
+        "base_weight": 30,
+        "mod_low_health": 0,
+        "mod_late_game": 30
+      },
+      {
+        "name": "Naturalize",
+        "base_weight": 20,
+        "mod_low_health": 5,
+        "mod_late_game": 5
+      }
+    ]
+  },
+  {
+    "id": "burn_red_black",
+    "name": "Burn Red Black",
+    "pattern": "Aggressive",
+    "desc": "Deals direct damage to players and punishes card draw.",
+    "actions": [
+      {
+        "name": "Direct Damage",
+        "base_weight": 60,
+        "mod_low_health": 20,
+        "mod_late_game": 20
+      },
+      {
+        "name": "Discard Effect",
+        "base_weight": 30,
+        "mod_low_health": 0,
+        "mod_late_game": -10
+      },
+      {
+        "name": "Sacrifice Creature",
+        "base_weight": 10,
+        "mod_low_health": 10,
+        "mod_late_game": 10
+      }
+    ]
+  }
+]
