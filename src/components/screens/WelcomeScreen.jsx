@@ -15,6 +15,9 @@ function WelcomeScreen() {
         <ButtonLink to="/new">
           New Game
         </ButtonLink>
+        <ButtonLink to="/card-printer">
+          Card Printers
+        </ButtonLink>
 
         {/* <ButtonLink to="/game">
           Load Game

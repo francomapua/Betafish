@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import WelcomeScreen from './components/screens/WelcomeScreen';
 import GameScreen from './components/screens/GameScreen';
 import NewGameScreen from './components/screens/NewGameScreen';
+import CardPrinterScreen from './components/screens/CardPrinterScreen';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<WelcomeScreen />} />
           <Route path="/new" element={<NewGameScreen />} />
           <Route path="/game" element={<GameScreen />} />
+          <Route path="/card-printer" element={<CardPrinterScreen />} />
         </Routes>
 
       </Router>
