@@ -9,6 +9,10 @@ const LIVE_SEARCH_MIN_LENGTH = 3;
 const LIVE_SEARCH_DEBOUNCE_MS = 400;
 const DOUBLE_FACED_LAYOUTS = new Set(["transform", "modal_dfc", "double_faced_token", "reversible_card"]);
 const SPLIT_LAYOUTS = new Set(["split", "aftermath"]);
+const PRINT_COLUMNS_PER_PAGE = 3;
+const PRINT_ROWS_PER_PAGE = 6;
+const PRINT_CARDS_PER_PAGE = PRINT_COLUMNS_PER_PAGE * PRINT_ROWS_PER_PAGE;
+const CARD_PRINTER_STORAGE_KEY = "betafish.cardPrinterState";
 
 function getEntityStats(entity) {
   if (entity.defense) {
@@ -167,6 +171,43 @@ function buildCardResults(parsedEntries, cardsByName) {
   });
 }
 
+function chunkCardsForPrint(cards) {
+  const pages = [];
+
+  for (let index = 0; index < cards.length; index += PRINT_CARDS_PER_PAGE) {
+    pages.push(cards.slice(index, index + PRINT_CARDS_PER_PAGE));
+  }
+
+  return pages;
+}
+
+function loadStoredCardPrinterState() {
+  try {
+    const storedValue = window.localStorage.getItem(CARD_PRINTER_STORAGE_KEY);
+
+    if (!storedValue) {
+      return {
+        query: "",
+        cards: [],
+      };
+    }
+
+    const parsedValue = JSON.parse(storedValue);
+
+    return {
+      query: typeof parsedValue.query === "string" ? parsedValue.query : "",
+      cards: Array.isArray(parsedValue.cards) ? parsedValue.cards : [],
+    };
+  } catch (error) {
+    console.error("Error loading saved card printer state:", error);
+
+    return {
+      query: "",
+      cards: [],
+    };
+  }
+}
+
 function getOracleText(card) {
   if (card.oracle_text) {
     return card.oracle_text;
@@ -235,8 +276,8 @@ function getStats(card) {
 }
 
 function CardPrinterScreen() {
-  const [query, setQuery] = useState("");
-  const [cards, setCards] = useState([]);
+  const [query, setQuery] = useState(() => loadStoredCardPrinterState().query);
+  const [cards, setCards] = useState(() => loadStoredCardPrinterState().cards);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [missingCards, setMissingCards] = useState([]);
@@ -245,6 +286,7 @@ function CardPrinterScreen() {
   const [searchResults, setSearchResults] = useState([]);
   const [isSearchingCards, setIsSearchingCards] = useState(false);
   const [searchStatusMessage, setSearchStatusMessage] = useState("");
+  const printPages = chunkCardsForPrint(cards);
 
   useEffect(() => {
     let isMounted = true;
@@ -273,6 +315,20 @@ function CardPrinterScreen() {
       isMounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(
+        CARD_PRINTER_STORAGE_KEY,
+        JSON.stringify({
+          query,
+          cards,
+        })
+      );
+    } catch (error) {
+      console.error("Error saving card printer state:", error);
+    }
+  }, [query, cards]);
 
   useEffect(() => {
     const trimmedQuery = searchInput.trim();
@@ -490,19 +546,32 @@ function CardPrinterScreen() {
         </div>
 
         <div className="rounded-xl border border-stone-800 bg-stone-950/60 p-4 print:rounded-none print:border-0 print:bg-white print:p-0">
-          <div className="flex flex-wrap justify-center print:justify-start print:gap-0">
-            {cards.map((card, index) => (
-              <CardPrint
-                key={`${card.id}-${index}`}
-                name={card.name}
-                typeLine={card.typeLine}
-                manaCost={card.manaCost}
-                description={card.description}
-                stats={card.stats}
-                cardTag={card.cardTag}
-                flipLabel={card.flipLabel}
-                symbolMap={symbolMap}
-              />
+          <div className="flex flex-col gap-6 print:gap-0">
+            {printPages.map((pageCards, pageIndex) => (
+              <div
+                key={`page-${pageIndex}`}
+                className="rounded-lg border border-stone-800/80 p-3 print:break-after-page print:rounded-none print:border-0 print:p-0 last:print:break-after-auto"
+              >
+                <p className="mb-3 text-xs uppercase tracking-[0.08em] text-stone-400 print:hidden">
+                  Page {pageIndex + 1}
+                </p>
+                <div className="grid justify-center gap-3 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 print:grid-cols-3 print:gap-0">
+                  {pageCards.map((card, index) => (
+                    <div key={`${card.id}-${pageIndex}-${index}`} className="print:break-inside-avoid-page">
+                      <CardPrint
+                        name={card.name}
+                        typeLine={card.typeLine}
+                        manaCost={card.manaCost}
+                        description={card.description}
+                        stats={card.stats}
+                        cardTag={card.cardTag}
+                        flipLabel={card.flipLabel}
+                        symbolMap={symbolMap}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>
