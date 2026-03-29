@@ -128,20 +128,20 @@ function CardPrint({
   const rulesTextPresentation = getRulesTextPresentation(rulesText);
 
   return (
-    <div className="m-3 h-[40mm] w-[63mm] overflow-hidden rounded-md border border-stone-700 bg-stone-900 text-zinc-100 shadow-sm print:m-0 print:shadow-none">
+    <div className="m-3 h-[40mm] w-[63mm] overflow-hidden rounded-md border border-stone-700 bg-stone-900 text-zinc-100 shadow-sm print:m-0 print:border-black print:bg-white print:text-black print:shadow-none">
       <div className="flex h-full flex-col p-2">
-        <div className="flex items-start justify-between gap-2 border-b border-stone-700 pb-1">
+        <div className="flex items-start justify-between gap-2 border-b border-stone-700 pb-1 print:border-black">
           <h2 className="min-w-0 flex-1 text-[10px] leading-tight font-bold uppercase tracking-[0.04em]">
             <span className="block">{name}</span>
           </h2>
           <div className="flex shrink-0 flex-col items-end gap-1">
             {cardTag ? (
-              <span className="rounded border border-amber-400/40 bg-amber-500/10 px-1 py-px text-[5px] font-semibold uppercase tracking-[0.08em] text-amber-200">
+              <span className="rounded border border-amber-400/40 bg-amber-500/10 px-1 py-px text-[5px] font-semibold uppercase tracking-[0.08em] text-amber-200 print:border-black print:bg-black print:text-white">
                 {cardTag}
               </span>
             ) : null}
             {flipLabel ? (
-              <span className="rounded border border-sky-400/40 bg-sky-500/10 px-1 py-px text-[5px] font-semibold uppercase tracking-[0.08em] text-sky-200">
+              <span className="rounded border border-sky-400/40 bg-sky-500/10 px-1 py-px text-[5px] font-semibold uppercase tracking-[0.08em] text-sky-200 print:border-black print:bg-white print:text-black">
                 {flipLabel}
               </span>
             ) : null}
@@ -149,10 +149,10 @@ function CardPrint({
         </div>
 
         {(typeLine || manaCost) ? (
-          <div className="mt-1 flex items-start justify-between gap-2 border-b border-stone-800 pb-1 text-[7px] leading-tight text-stone-300">
+          <div className="mt-1 flex items-start justify-between gap-2 border-b border-stone-800 pb-1 text-[7px] leading-tight text-stone-300 print:border-black print:text-black">
             <p className="min-w-0 flex-1">{typeLine}</p>
             {manaCost ? (
-              <span className="max-w-[20mm] shrink-0 text-right text-[7px] leading-tight text-amber-200">
+              <span className="max-w-[20mm] shrink-0 text-right text-[7px] leading-tight text-amber-200 print:text-black">
                 <span className="inline-flex flex-wrap justify-end gap-px align-top">
                   {renderTextWithSymbols(manaCost, symbolMap, {
                     lineClassName: "inline",
@@ -165,7 +165,7 @@ function CardPrint({
         ) : null}
 
         <div
-          className={`mt-1 flex-1 overflow-hidden whitespace-pre-line wrap-break-word text-zinc-200 ${rulesTextPresentation.containerClassName}`}
+          className={`mt-1 flex-1 overflow-hidden whitespace-pre-line wrap-break-word text-zinc-200 print:text-black ${rulesTextPresentation.containerClassName}`}
           style={{
             display: "-webkit-box",
             WebkitBoxOrient: "vertical",
@@ -182,7 +182,7 @@ function CardPrint({
         </div>
 
         {stats ? (
-          <div className="mt-1 border-t border-stone-700 pt-1 text-right text-[8px] font-semibold leading-none text-emerald-300">
+          <div className="mt-1 border-t border-stone-700 pt-1 text-right text-[8px] font-semibold leading-none text-emerald-300 print:border-black print:text-black">
             {stats}
           </div>
         ) : null}
