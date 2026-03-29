@@ -5,6 +5,7 @@ import WelcomeScreen from './components/screens/WelcomeScreen';
 import GameScreen from './components/screens/GameScreen';
 import NewGameScreen from './components/screens/NewGameScreen';
 import CardPrinterScreen from './components/screens/CardPrinterScreen';
+import BulletScreen from './components/screens/BulletScreen';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/new" element={<NewGameScreen />} />
           <Route path="/game" element={<GameScreen />} />
           <Route path="/card-printer" element={<CardPrinterScreen />} />
+          <Route path="/bullet" element={<BulletScreen />} />
         </Routes>
 
       </Router>

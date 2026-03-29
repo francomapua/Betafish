@@ -1,0 +1,183 @@
+.bullet-screen {
+  background:
+    radial-gradient(circle at top, rgba(245, 158, 11, 0.12), transparent 28%),
+    radial-gradient(circle at bottom, rgba(59, 130, 246, 0.14), transparent 30%),
+    linear-gradient(145deg, #07090c 0%, #12161d 52%, #090b0f 100%);
+}
+
+.bullet-hud {
+  background: linear-gradient(180deg, rgba(26, 31, 39, 0.92), rgba(10, 12, 16, 0.92));
+  backdrop-filter: blur(18px);
+}
+
+.bullet-center-dock {
+  width: fit-content;
+}
+
+.bullet-action-menu,
+.bullet-settings-popover {
+  background: linear-gradient(180deg, rgba(26, 31, 39, 0.92), rgba(10, 12, 16, 0.92));
+  backdrop-filter: blur(18px);
+}
+
+.bullet-action-button,
+.bullet-mini-button {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+  transition: transform 120ms ease, border-color 120ms ease, background-color 120ms ease;
+}
+
+.bullet-action-button-primary {
+  background: radial-gradient(circle at top, rgba(252, 211, 77, 0.36), rgba(251, 191, 36, 0.12) 45%, rgba(255, 255, 255, 0.08) 100%);
+  border-color: rgba(251, 191, 36, 0.3);
+}
+
+.bullet-action-button-resume-flash {
+  animation: bullet-resume-flash 900ms ease-in-out infinite;
+  border-color: rgba(253, 224, 71, 0.8);
+  box-shadow:
+    0 0 0 1px rgba(253, 224, 71, 0.28),
+    0 0 22px rgba(253, 224, 71, 0.36),
+    0 0 44px rgba(251, 191, 36, 0.32);
+}
+
+.bullet-action-menu {
+  animation: bullet-action-menu-pop 160ms ease-out;
+}
+
+.bullet-action-button {
+  min-height: 3.2rem;
+  min-width: 5.4rem;
+  padding: 0.8rem 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.bullet-action-icon-button {
+  min-width: 3.2rem;
+  width: 3.2rem;
+  padding: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bullet-action-icon {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.bullet-mini-button {
+  min-height: 3rem;
+  padding: 0.8rem 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.bullet-settings-popover {
+  transform-origin: center;
+  animation: bullet-settings-pop 160ms ease-out;
+}
+
+.bullet-action-button:active,
+.bullet-mini-button:active {
+  transform: scale(0.97);
+}
+
+.bullet-action-button:hover,
+.bullet-mini-button:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.bullet-clock-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.bullet-clock-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, transparent 28%, rgba(255, 255, 255, 0.18) 50%, transparent 72%);
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 140ms ease;
+}
+
+.bullet-clock-button:active::after {
+  opacity: 1;
+  transform: translateX(100%);
+  transition: transform 220ms ease;
+}
+
+.animate-bullet-switch-flash {
+  animation: bullet-switch-flash 180ms ease-out;
+}
+
+.animate-bullet-pause-pulse {
+  animation: bullet-pause-pulse 1s ease-in-out infinite;
+}
+
+@keyframes bullet-switch-flash {
+  0% {
+    opacity: 0.95;
+    transform: scale(1.03);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+@keyframes bullet-pause-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.16);
+  }
+
+  50% {
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+}
+
+@keyframes bullet-action-menu-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes bullet-resume-flash {
+  0%,
+  100% {
+    background: radial-gradient(circle at top, rgba(254, 240, 138, 0.95), rgba(251, 191, 36, 0.28) 42%, rgba(255, 255, 255, 0.1) 100%);
+    transform: scale(1);
+    filter: brightness(1);
+  }
+
+  50% {
+    background: radial-gradient(circle at top, rgba(255, 251, 235, 1), rgba(252, 211, 77, 0.7) 40%, rgba(255, 255, 255, 0.2) 100%);
+    transform: scale(1.04);
+    filter: brightness(1.18);
+  }
+}
+
+@keyframes bullet-settings-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
